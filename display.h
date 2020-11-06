@@ -24,21 +24,21 @@ int loopIdx = 0;
 
 void displayTemperature(float temperature) {
   char s[12];
-  sprintf(s, "Temp: %2.1f", temperature);
+  sprintf(s, "Temp:%2.1fC", temperature);
   display.setCursor(2,5);
   display.print(s);
 }
 
 void displayHumidity(float humidity) {
   char s[12];
-  sprintf(s, "Humi: %3.0f", humidity);
+  sprintf(s, "Humi: %3.0f%%", humidity);
   display.setCursor(2,25);
   display.print(s);
 }
 
 void displayCO2(int co2) {
   char s[12];
-  sprintf(s, "co2: %5i", co2);
+  sprintf(s, "co2:%4ipp", co2);
   display.setCursor(2,45);
   display.print(s);
 }
