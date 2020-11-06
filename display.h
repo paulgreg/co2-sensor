@@ -16,46 +16,43 @@ void setupScreen() {
     Serial.println(F("SSD1306 allocation failed"));
     for(;;); // Don't proceed, loop forever
   }
-  // Show initial display buffer contents on the screen the library initializes this with an Adafruit splash screen.
-  display.display();
   display.cp437(true);
+  display.clearDisplay();
 }
 
 int loopIdx = 0;
 
-void displayTemp(float temp) {
-  char sTmp[20];
-  sprintf(sTmp, "Temp: %2.1f", temp);
+void displayTemperature(float temperature) {
+  char s[12];
+  sprintf(s, "Temp: %2.1f", temperature);
   display.setCursor(2,5);
-  display.print(sTmp);
+  display.print(s);
+}
+
+void displayHumidity(float humidity) {
+  char s[12];
+  sprintf(s, "Humi: %3.0f", humidity);
+  display.setCursor(2,25);
+  display.print(s);
 }
 
 void displayCO2(int co2) {
-  char sCO2[20];
-  sprintf(sCO2, "co2: %5i", co2);
-  display.setCursor(2,25);
-  display.print(sCO2);
+  char s[12];
+  sprintf(s, "co2: %5i", co2);
+  display.setCursor(2,45);
+  display.print(s);
 }
 
-void displayPrintWarning() {
-  display.setCursor(10,45);
-  display.print("Windows !");
-}
-
-void displayData(float temp, int co2) {
+void displayData(float temperature, float humidity, int co2) {
   display.clearDisplay();
   
   display.setTextSize(2);
   display.setTextColor(WHITE);
   
-  displayTemp(temp);
+  displayTemperature(temperature);
+  displayHumidity(humidity);
   displayCO2(co2);
 
-  if (co2 > CO2_THRESHOLD) {
-    display.invertDisplay(true);
-    displayPrintWarning();
-  } else {
-    display.invertDisplay(false);
-  }
+  display.invertDisplay(co2 > CO2_THRESHOLD);
   display.display();
 }
