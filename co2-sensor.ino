@@ -1,4 +1,4 @@
-// reset should be only at first time
+// reset should be only set the first time and revert then
 #define RESET_EEPROM false
 
 #define CO2_THRESHOLD 1000
