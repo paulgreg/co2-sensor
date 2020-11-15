@@ -30,8 +30,8 @@ void sendMetrics(float temperature, float humidity, int co2) {
     sprintf(data, "temperature,location=%s value=%.1f\n" \
     "humidity,location=%s value=%.0f\n" \
     "co2,location=%s value=%i\n", LOCATION, temperature, LOCATION, humidity, LOCATION, co2);
-    Serial.print("POSTing ");
-    Serial.println(data);
+    Serial.println("POST data:");
+    Serial.print(data);
     Serial.print("to ");
     Serial.println(INFLUXDB_URL);
     
