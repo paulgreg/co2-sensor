@@ -3,20 +3,22 @@
 #include <WiFiClient.h>
 
 boolean connectToWifi(char* ssid, char* password) {
-  Serial.printf("\nconnecting to %s\n", ssid);
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-  unsigned int retries = 100;
-  while (WiFi.status() != WL_CONNECTED && (retries-- > 0)) {
-    Serial.print(".");
-    delay(500);
+  if (WiFi.status()!= WL_CONNECTED) {
+    Serial.printf("\nconnecting to %s\n", ssid);
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(ssid, password);
+    unsigned int retries = 100;
+    while (WiFi.status() != WL_CONNECTED && (retries-- > 0)) {
+      Serial.print(".");
+      delay(500);
+    }
+    if (WiFi.status() != WL_CONNECTED) {
+      Serial.println("\nWifi connection failed");
+      return false;
+    }
+    Serial.print("\nwifi connected\nIP address: ");
+    Serial.println(WiFi.localIP());
   }
-  if (WiFi.status() != WL_CONNECTED) {
-    Serial.println("\nWifi connection failed");
-    return false;
-  }
-  Serial.print("\nwifi connected\nIP address: ");
-  Serial.println(WiFi.localIP());
   return true;
 }
 

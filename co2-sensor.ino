@@ -20,12 +20,11 @@ void loop() {
   float humidity = getHumidity();
   unsigned int co2 = getCo2(temperature, humidity);
   displayData(temperature, humidity, co2);
-  if (serialIdx++ % 60 == 0) {
+  if (serialIdx++ % 6 == 0) {
     Serial.printf("Update: temp: %.1f c - humitidy: %.0f - co2: %i\n", temperature, humidity, co2);
     #ifdef WIFI_SSID
     if (connectToWifi(WIFI_SSID, WIFI_PASSWORD)) {
        sendMetrics(temperature, humidity, co2);
-       disconnect();
     }
     #endif
   }

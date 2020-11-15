@@ -49,7 +49,7 @@ If I understood correctly, the best baseline value is get after 12 continuous ho
 
 Also, the DHT11 sensor is used to compute absolute humidity level, also used to increase SGP30 precision.
 
-If you define a `WIFI_SSID`, a `WIFI_PASSWORD` and a `INFLUXDB_URL` in `parameters.h`, the esp8266 will periodically (~10 min) send temperature, humidity & co2 to an influxdb database. You can set the location name (like the room where the sensor is placed) in `LOCATION` parameter.
+If you define a `WIFI_SSID`, a `WIFI_PASSWORD` and a `INFLUXDB_URL` in `parameters.h`, the esp8266 will periodically send temperature, humidity & co2 to an influxdb database. You can set the location name (like the room where the sensor is placed) in `LOCATION` parameter.
 
 ## Grafana, Influxdb
 
