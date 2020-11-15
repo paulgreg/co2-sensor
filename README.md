@@ -63,6 +63,12 @@ You can then send data :
 And read it back :
 `curl -XPOST -s http://localhost:8086/query\?pretty\=true --data-urlencode "db=sensor" --data-urlencode "q=SELECT * FROM temperature"`
 
+The grafana board I configured has been exported to grafana directory.
+
+Here’s a sample output :
+![Screenshot of grafana dashboard](./grafana/grafana.png 'Dashboard')
+
+
 ## References
 
 ### Hardware
