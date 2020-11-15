@@ -1,1 +1,8 @@
 #define CO2_THRESHOLD 1000
+
+/* If you want to send values to an influxdb, uncomment and update the next lines :
+#define WIFI_SSID  "ssid"
+#define WIFI_PASSWORD "password"
+#define INFLUXDB_URL "http://192.168.0.1:8086/write?db=sensor"
+#define LOCATION "bedroom"
+*/
