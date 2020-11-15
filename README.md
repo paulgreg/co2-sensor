@@ -36,7 +36,10 @@ Inspiration is from [Eole project](http://lafabrique.centralesupelec.fr/projetco
 
 ## Information
 
-The first time you’ll program the esp8266, you’ll need to set `RESET_EEPROM` to `true` in order to prepare EEPROM. Warning, you’ll need to set it back to `false` after that first programming.
+First copy `parameters.h.dist` to `parameters.h`.
+It contains the `CO2_THRESHOLD` value which inverts the display.
+It’s a simple way to bring attention to users to open windows.
+
 
 As explained on  [Adafruit SGP30 sensor page](https://learn.adafruit.com/adafruit-sgp30-gas-tvoc-eco2-mox-sensor/arduino-code), the SPG30 sensor needs to be calibrated with a baseline value (given by the sensor). 
 That baseline is periodically asked from SPG30 sensor and stored into EEPROM (~1 time per hour). 
@@ -46,8 +49,6 @@ If I understood correctly, the best baseline value is get after 12 continuous ho
 
 Also, the DHT11 sensor is used to compute absolute humidity level, also used to increase SGP30 precision.
 
-Please note also the `CO2_THRESHOLD` value which inverts the display.
-It’s a simple way to bring attention to users to open windows.
 
 ## References
 

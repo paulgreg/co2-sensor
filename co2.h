@@ -1,25 +1,33 @@
 #include <Wire.h>
 #include "Adafruit_SGP30.h"
+#include <EEPROM.h>
 
-// https://learn.adafruit.com/adafruit-sgp30-gas-tvoc-eco2-mox-sensor/arduino-code
-Adafruit_SGP30 sgp;
+Adafruit_SGP30 sgp; // https://learn.adafruit.com/adafruit-sgp30-gas-tvoc-eco2-mox-sensor/arduino-code
+ 
+struct BASELINES {
+  uint16_t co2;
+  uint16_t tvoc;
+};
+
+BASELINES baselines;
 
 void setupCo2() {
   if (!sgp.begin()){
-    Serial.println("Sensor not found :(");
+    Serial.println("Sensor not found !");
+    delay(1000);
     while (1);
   }
   Serial.print("Found SGP30 serial #");
   Serial.print(sgp.serialnumber[0], HEX);
   Serial.print(sgp.serialnumber[1], HEX);
   Serial.println(sgp.serialnumber[2], HEX);
-  
+
   // Calibration baselines
-  uint16_t baselineeCO2 = readValue(0);
-  uint16_t baselineeTVOC = readValue(1);
-  Serial.print("< Restauring baselines values: eCO2: 0x"); Serial.print(baselineeCO2, HEX);
-  Serial.print(" & TVOC: 0x"); Serial.println(baselineeTVOC, HEX);
-  sgp.setIAQBaseline(baselineeCO2, baselineeTVOC); 
+  EEPROM.begin(sizeof(baselines));
+  EEPROM.get(0, baselines);
+  Serial.print("< Restauring baselines values: eCO2: 0x"); Serial.print(baselines.co2, HEX);
+  Serial.print(" & TVOC: 0x"); Serial.println(baselines.tvoc, HEX);
+  sgp.setIAQBaseline(baselines.co2, baselines.tvoc); 
 }
 
 
@@ -43,16 +51,14 @@ int getCo2(float temperature, float humidity) {
     Serial.println("Measurement failed");
     return 0;
   }
-
-  if (co2idx++ % 3600 == 0) {
-    uint16_t baselineeCO2, baselineeTVOC;
-    if (!sgp.getIAQBaseline(&baselineeCO2, &baselineeTVOC)) {
+  if (co2idx++ % 360 == 0) {
+    if (!sgp.getIAQBaseline(&baselines.co2, &baselines.tvoc)) {
       Serial.println("Failed to get baseline readings");
     } else {
-      Serial.print("> Saving baselines values: eCO2: 0x"); Serial.print(baselineeCO2, HEX);
-      Serial.print(" & TVOC: 0x"); Serial.println(baselineeTVOC, HEX);
-      writeValue(0, baselineeCO2);
-      writeValue(1, baselineeTVOC);
+      Serial.print("> Saving baselines values: eCO2: 0x"); Serial.print(baselines.co2, HEX);
+      Serial.print(" & TVOC: 0x"); Serial.println(baselines.tvoc, HEX);
+      EEPROM.put(0, baselines);
+      EEPROM.commit();
     }
   }
   
