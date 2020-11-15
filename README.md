@@ -55,9 +55,9 @@ If you define a `WIFI_SSID`, a `WIFI_PASSWORD` and a `INFLUXDB_URL` in `paramete
 
 You can install influxdb, telegraf (used for system metrics) & grafana via docker (links in reference).
 
-You’ll have to create a `sensor` datbase then : `curl -XPOST -s http://localhost:8086/query\?pretty\=true --data-urlencode "q=CREATE DATABASE sensor"`
+You’ll have to create a `sensor` datbase via : `curl -XPOST -s http://localhost:8086/query\?pretty\=true --data-urlencode "q=CREATE DATABASE sensor"`
 
-You can then send data :
+You can then send a test data :
 `curl -i -XPOST 'http://localhost:8086/write?db=sensor' --data-binary 'temperature,location=home value=20.0'`
 
 And read it back :
