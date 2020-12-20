@@ -2,6 +2,8 @@
 #include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
 
+#ifdef WIFI_SSID
+
 boolean connectToWifi(char* ssid, char* password) {
   if (WiFi.status()!= WL_CONNECTED) {
     Serial.printf("\nconnecting to %s\n", ssid);
@@ -47,6 +49,6 @@ void sendMetrics(float temperature, float humidity, int co2) {
     Serial.println(payload);
     Serial.print("Response:");
     Serial.println(httpCode);
- }
-
+  }
 }
+#endif
