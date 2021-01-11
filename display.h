@@ -23,35 +23,42 @@ void setupScreen() {
 int loopIdx = 0;
 
 void displayTemperature(float temperature) {
-  char s[12];
-  sprintf(s, "Temp:%2.1fC", temperature);
-  display.setCursor(2,5);
+  char s[10];
+  sprintf(s, "%2.0fC", temperature);
+  display.setTextSize(2);
+  display.setCursor(24, 42);
   display.print(s);
 }
 
 void displayHumidity(float humidity) {
-  char s[12];
-  sprintf(s, "Humi: %3.0f%%", humidity);
-  display.setCursor(2,25);
+  char s[10];
+  sprintf(s, "%3.0f%%", humidity);
+  display.setTextSize(2);
+  display.setCursor(64, 42);
   display.print(s);
 }
 
+
 void displayCO2(int co2) {
-  char s[12];
-  sprintf(s, "co2:%4ipp", co2);
-  display.setCursor(2,45);
+  char s[10];
+  display.setTextSize(3);
+  sprintf(s, "%4i", co2);
+  display.setCursor(10, 12);
   display.print(s);
+
+  display.setTextSize(2);
+  display.setCursor(86, 20);
+  display.print("ppm");
 }
 
 void displayData(float temperature, float humidity, int co2) {
   display.clearDisplay();
   
-  display.setTextSize(2);
   display.setTextColor(WHITE);
   
+  displayCO2(co2);
   displayTemperature(temperature);
   displayHumidity(humidity);
-  displayCO2(co2);
 
   display.invertDisplay(co2 > CO2_THRESHOLD);
   display.display();
